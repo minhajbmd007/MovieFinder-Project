@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Movie Search App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============ WELCOME OVERLAY ============ -->
+  <div id="welcomeOverlay" class="welcome-overlay">
+    <h1>Welcome to MovieFinder 🎬</h1>
+  </div>
+
+  <!-- ============ NAVBAR ============ -->
+  <nav class="navbar">
+    <div class="logo">🎬 MovieFinder</div>
+    <ul class="nav-links">
+      <li><a href="#" id="navHome">Home</a></li>
+      <li><a href="#" id="navFavorites">Favorites</a></li>
+      <li><a href="#" id="navAbout">About</a></li>
+    </ul>
+  </nav>
+  
+  <!-- ============ MAIN ============ -->
+  <main>
+    
+    <!-- ====== HOME SECTION ====== -->
+    <section id="homeSection">
+      <h1 class="section-title">Search for Movies</h1>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Enter movie title..." />
+        <button id="searchBtn">Search</button>
+      </div>
+
+      <!-- Search History -->
+      <div class="history-container" id="searchHistory"></div>
+
+      <!-- Loader -->
+      <div id="loader" class="loader" style="display: none;"></div>
+
+      <!-- Movie Results -->
+      <div class="results" id="movieResults"></div>
+
+      <!-- Load More Button -->
+      <button id="loadMoreBtn" style="display: none;">Load More</button>
+    </section>
+
+    <!-- ====== FAVORITES SECTION ====== -->
+    <section id="favoritesSection" style="display: none;">
+      <h1 class="section-title">Your Favorites</h1>
+      <div class="results" id="favoritesList"></div>
+    </section>
+
+    <!-- ====== ABOUT SECTION ====== -->
+<section id="aboutSection" class="about-section">
+  <div class="about-hero fade-in-up">
+    <h2>About This App</h2>
+    <p class="tagline">A lightweight, animated movie explorer built on the OMDb API with a focus on speed, polish, and personalization.</p>
+  </div>
+
+  <div class="about-grid">
+    <!-- Intro / Purpose -->
+    <div class="about-block fade-in-up">
+      <h3>🎯 Purpose</h3>
+      <p>
+        MovieFinder helps you quickly **search films**, view rich details (cast, genre, plot, rating), watch trailers, and save what you love—
+        all stored locally in your browser so it’s **fast, private, and persistent**.
+      </p>
+    </div>
+
+    <!-- Key Features -->
+    <div class="about-block fade-in-up delay-200">
+      <h3>✨ Key Features</h3>
+      <ul class="feature-list">
+        <li>🔍 Instant movie search with debounced input</li>
+        <li>⭐ Add / remove favorites with sorting & export/import</li>
+        <li>🧠 Recent search history tags (quick reuse)</li>
+        <li>🎞️ Trailer fetch (YouTube API)</li>
+        <li>🪄 Flip card + staggered + intersection animations</li>
+        <li>📱 Responsive layout & lazy‑loaded posters</li>
+        <li>⬆ Back‑to‑Top button & smooth transitions</li>
+        <li>📤 Export favorites to JSON / 📥 import later</li>
+      </ul>
+    </div>
+
+    <!-- How To Use -->
+    <div class="about-block fade-in-up delay-400">
+      <h3>🛠️ How to Use</h3>
+      <ol class="howto">
+        <li>Type a movie title in the search bar and press **Enter** or click **Search**.</li>
+        <li>Click a **poster card** to flip it or press **Details** for the full modal.</li>
+        <li>Use the **★** button to toggle favorites; open the <em>Favorites</em> tab to manage them.</li>
+        <li>Sort, export, or import favorites via the toolbar (auto appears in the Favorites tab).</li>
+        <li>Click **Watch Trailer** in the modal to embed a YouTube trailer (if found).</li>
+      </ol>
+    </div>
+
+    <!-- Technology -->
+    <div class="about-block fade-in-up">
+      <h3>🧩 Tech Stack</h3>
+      <ul class="mini-list">
+        <li><strong>Frontend:</strong> Vanilla HTML, CSS (custom animations), JavaScript (no frameworks)</li>
+        <li><strong>Data:</strong> OMDb API (public movie metadata)</li>
+        <li><strong>Media:</strong> YouTube Data API (trailers)</li>
+        <li><strong>Storage:</strong> <code>localStorage</code> for favorites & settings</li>
+        <li><strong>Performance:</strong> Lazy images, debounced queries, minimal DOM reflows</li>
+      </ul>
+    </div>
+
+    <!-- Privacy -->
+    <div class="about-block fade-in-up delay-200">
+      <h3>🔒 Privacy & Data</h3>
+      <p>
+        No accounts. No tracking. All favorites, sort preferences, and history are saved in your own browser only.
+        Clearing your browser storage will remove them. API calls go directly to OMDb / YouTube.
+      </p>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="about-block fade-in-up delay-400">
+      <h3>🛤️ Planned Enhancements</h3>
+      <ul class="mini-list">
+        <li>Dark / Light theme toggle</li>
+        <li>Infinite scroll (optional switch)</li>
+        <li>Keyboard navigation & accessibility refinements</li>
+        <li>Multi‑criteria filtering (year, genre, rating)</li>
+        <li>Optional poster grid density setting</li>
+      </ul>
+      <p class="foot-note">
+        Have suggestions? Add them to the roadmap idea list!
+      </p>
+    </div>
+  </div>
+
+  <div class="about-footer fade-in-up">
+    <p><strong>Credits:</strong> Data courtesy of the OMDb API & trailers via YouTube. This project is for educational / personal use.</p>
+  </div>
+</section>
+
+
+
+  </main>
+
+  <!-- ============ MODAL ============ -->
+  <div class="modal" id="movieModal">
+    <div class="modal-content">
+      <button class="close" id="closeModal">&times;</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+  <button id="backToTop" class="back-to-top" aria-label="Back to top">↑</button>
+  <div id="scrollSentinel" style="height:1px;"></div>
+
+  <script src="script.js"></script>
+  <script>
+    // Welcome overlay fade-out logic
+    document.addEventListener('DOMContentLoaded', () => {
+      const welcomeOverlay = document.getElementById('welcomeOverlay');
+      setTimeout(() => {
+        welcomeOverlay.classList.add('fade-out');
+      }, 2000);
+    });
+  </script>
+</body>
+</html>
